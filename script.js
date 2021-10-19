@@ -1,5 +1,4 @@
 // Basic Mathematical Operators:
-
 function add(a, b) {
     return a + b;
 }
@@ -14,4 +13,9 @@ function multiply(a, b) {
 
 function divide(a, b) {
     return a / b;
+}
+
+// Operator function, takes in two operands and operator
+function operate(a, b, operatorFunction) {
+    return operatorFunction(a, b);
 }
