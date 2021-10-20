@@ -19,3 +19,6 @@ function divide(a, b) {
 function operate(a, b, operatorFunction) {
     return operatorFunction(a, b);
 }
+
+let operand1 = '';
+
