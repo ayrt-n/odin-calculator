@@ -1,13 +1,19 @@
 body {
     background-color: #484848;
     font-family: 'Orbitron';
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100vh;
 }
 
 .container {
-    margin-top: 50px;
+    flex: 1;
+    margin-top: 75px;
     display: flex;
     justify-content: center;
 }
+
 .calculator {
     height: 680px;
     width: 480px;
@@ -52,7 +58,9 @@ button {
 
 .clear {
     font-size: 26px;
+    background-color: rgb(255, 236, 149);
 }
+
 
 .equals-div {
     display: flex;
@@ -70,3 +78,27 @@ button:hover {
 button:active {
     filter: brightness(45%);
 }
+
+.footer {
+    color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+.fa-github {
+    color: var(--font);
+    font-size: 24px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .fa-github:hover {
+    transform: rotate(360deg) scale(1.2);
+  }
+
+  a {
+      color: white;
+  }

@@ -22,6 +22,10 @@ const display = document.querySelector('.display');
 
 operandButtons.forEach((button) => {
     button.addEventListener('click', () => {
+        if (display.textContent === 'X_X') {
+            clear() // If calculator broken, fix before moving on
+        }
+
         if (isFirst === true) {
             if (operand1 === '0') { // Prevent user from inputting '000000002'
                 operand1 = '' + button.textContent
@@ -40,29 +44,89 @@ operandButtons.forEach((button) => {
     });
 });
 
+
+
+const decimalButton = document.querySelector('.decimal');
+
+decimalButton.addEventListener('click', () => {
+    if (display.textContent === 'X_X') {
+        clear() // If calculator broken, fix before moving on
+    }
+
+    if (isFirst === true) {
+        if (operand1.includes('.')) {
+            return;
+        } else {
+            operand1 += '.';
+        }
+    } else {
+        if (operand2.includes('.')) {
+            return;
+        } else {
+            operand2 += '.';
+        }
+    }
+});
+
+
 const operatorButtons = document.querySelectorAll('.operator');
 
 operatorButtons.forEach((operatorButton) => {
     operatorButton.addEventListener('click', function(e) {
-        operator = e.target.value
-        if (operand1 === '') { // If operand1 is empty, assume equal to 0
-            operand1 = '0';
+        if (display.textContent === 'X_X') {
+            clear() // If calculator broken, fix before moving on
         }
-        isFirst = false;
+
+    // First case to deal with user stringing together several operations
+    // I.e., 12 + 7 - 5 * 3 =    
+        if (isFirst === false && operand2 !== '') {
+            // Divide by zero case
+            if (operator === 'divide' && operand2 === '0') {
+                explode()
+            } else {             
+            operand1 = parseFloat(operand1);
+            operand2 = parseFloat(operand2);
+            result = Math.round(operate[operator](operand1, operand2) * 100) / 100;
+            display.textContent = result;
+
+            operand1 = result;
+            operand2 = '';
+            operator = e.target.value
+            }
+            
+        } else {      
+            operator = e.target.value
+        // If operand1 is empty set equal to display, this does two things;
+        // 1. If from blank calculator, user hits operator it will set to zero
+        // 2. If user wants to use results of a calc in new calc, will grab result on screen
+            if (operand1 === '') {
+                operand1 = display.textContent;
+            }
+            isFirst = false;
+        }
     });
 });
+
+
 
 const equalsButton = document.querySelector('.equals');
 
 equalsButton.addEventListener('click', () => {
-    if (operand2 === '') {
+    if (display.textContent === 'X_X') {
+        clear() // If calculator broken, fix before moving on
+    }
+
+    if (operator === '') {
+        return; // If no operator provided, do nothing
+    } else if (operand2 === '') {
+        operator = ''; // If no second operand provided but operator was, reset operator
         return;
-    } else if (operator === '') {
-        return;
+    } else if (operator === 'divide' && operand2 === '0') {
+        explode();
     } else { 
-        operand1 = parseInt(operand1);
-        operand2 = parseInt(operand2);
-        result = operate[operator](operand1, operand2);
+        operand1 = parseFloat(operand1);
+        operand2 = parseFloat(operand2);
+        result = Math.round(operate[operator](operand1, operand2) * 100) / 100;
         display.textContent = result;
     }
     // Reset operand variables, if user wants to enter in new operation
@@ -71,6 +135,8 @@ equalsButton.addEventListener('click', () => {
     operator = '';
     isFirst = true;
 });
+
+
 
 const clearButton = document.querySelector('.clear');
 
@@ -87,6 +153,19 @@ clearButton.addEventListener('click', clear);
 
 
 
+let explosion = document.createElement('img');
+explosion.setAttribute('src', 'explosion.gif');
+explosion.setAttribute('width', '330px');
+explosion.setAttribute('height', '80px');
 
+function explode() {
+    display.textContent = ''; 
+    display.appendChild(explosion);
+    setTimeout(fixCalculator, 1260);
+}
 
-
+function fixCalculator() {
+    display.textContent = '';
+    clear();
+    display.textContent = 'X_X';
+}
