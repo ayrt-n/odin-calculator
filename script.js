@@ -56,7 +56,7 @@ decimalButton.addEventListener('click', () => {
     if (isFirst === true) {
         if (operand1.includes('.')) {
             return;
-        } else if (operand1 = '') {
+        } else if (operand1 === '') {
             operand1 = '0.';
         } else {
             operand1 += '.';
@@ -65,12 +65,12 @@ decimalButton.addEventListener('click', () => {
     } else {
         if (operand2.includes('.')) {
             return;
-        } else if (operand2 = '') {
-            operand1 = '0.'; 
+        } else if (operand2 === '') {
+            operand2 = '0.'; 
         } else {
             operand2 += '.';
         }
-        display.textContent = disaplyNumber(operand2);
+        display.textContent = displayNumber(operand2);
     }
 });
 
@@ -127,7 +127,7 @@ equalsButton.addEventListener('click', () => {
     } else if (operand2 === '') {
         operator = ''; // If no second operand provided but operator was, reset operator
         return;
-    } else if (operator === 'divide' && operand2 === '0') {
+    } else if (operator === 'divide' && (operand2 === '0' || operand2 === '0.')) {
         explode();
     } else { 
         operand1 = parseFloat(operand1);
@@ -183,7 +183,7 @@ function fixCalculator() {
 // Change number to exponential form if too large
 function displayNumber(num) {
     if (num.toString().length < 10) {
-        return Number(num);
+        return num;
     } else {
         return Number.parseFloat(num).toExponential(2);
     }
