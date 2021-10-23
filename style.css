@@ -8,6 +8,7 @@ body {
 }
 
 .container {
+    margin: 50px 0px;
     flex: 1;
     display: flex;
     justify-content: center;
@@ -72,6 +73,7 @@ p {
 
 .buttons {
     display: flex;
+    color: black;
     justify-content: space-between;
     align-items: center;
     flex-flow: row wrap;
