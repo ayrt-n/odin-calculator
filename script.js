@@ -189,3 +189,70 @@ function displayNumber(num) {
     }
 }
 
+
+
+//Keyboard support!
+window.addEventListener('keyup', function(e) {
+    if (e.shiftKey) {
+        switch (e.code) {
+            case 'Digit8':
+                document.getElementById('Multiply').click();
+                break;
+            case 'Equal':
+                document.getElementById('Add').click();
+                break;
+            default:
+                break;
+        }
+    } else {
+        switch (e.code){
+            case 'Digit1':
+                document.getElementById(e.code).click();
+                break;
+            case 'Digit2':
+                document.getElementById(e.code).click();
+                break;
+            case 'Digit3':
+                document.getElementById(e.code).click();
+                break;
+            case 'Digit4':
+                document.getElementById(e.code).click();
+                break;
+            case 'Digit5':
+                document.getElementById(e.code).click();
+                break;
+            case 'Digit6':
+                document.getElementById(e.code).click();
+                break;
+            case 'Digit7':
+                document.getElementById(e.code).click();
+                break;
+            case 'Digit8':
+                document.getElementById(e.code).click();
+                break;
+            case 'Digit9':
+                document.getElementById(e.code).click();
+                break;
+            case 'Digit0':
+                    document.getElementById(e.code).click();
+                    break;
+            case 'Slash':
+                document.getElementById(e.code).click();
+                break;
+            case 'Equal':
+                document.getElementById(e.code).click();
+                break;
+            case 'Escape':
+                    document.getElementById(e.code).click();
+                    break;
+            case 'Minus':
+                document.getElementById(e.code).click();
+                break;
+            case 'Enter':
+                document.getElementById('Equal').click();
+                break;
+            default:
+                break;
+        }
+    }
+});
