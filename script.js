@@ -29,17 +29,17 @@ operandButtons.forEach((button) => {
         if (isFirst === true) {
             if (operand1 === '0') { // Prevent user from inputting '000000002'
                 operand1 = '' + button.textContent
-            } else if (operand1.length < 8) { // Limit user to 8 digit number
+            } else { // Change to exponential form
                 operand1 += button.textContent;
             }
-            display.textContent = operand1;
+            display.textContent = displayNumber(operand1);
         } else {
             if (operand2 === '0') { // Prevent user from inputting '000000002'
                 operand2 = '' + button.textContent
-            } else if (operand2.length < 8) { // Limit user to 8 digit number
+            } else {
                 operand2 += button.textContent;
             }
-            display.textContent = operand2;
+            display.textContent = displayNumber(operand2);
         }
     });
 });
@@ -56,15 +56,21 @@ decimalButton.addEventListener('click', () => {
     if (isFirst === true) {
         if (operand1.includes('.')) {
             return;
+        } else if (operand1 = '') {
+            operand1 = '0.';
         } else {
             operand1 += '.';
         }
+        display.textContent = displayNumber(operand1);
     } else {
         if (operand2.includes('.')) {
             return;
+        } else if (operand2 = '') {
+            operand1 = '0.'; 
         } else {
             operand2 += '.';
         }
+        display.textContent = disaplyNumber(operand2);
     }
 });
 
@@ -81,13 +87,13 @@ operatorButtons.forEach((operatorButton) => {
     // I.e., 12 + 7 - 5 * 3 =    
         if (isFirst === false && operand2 !== '') {
             // Divide by zero case
-            if (operator === 'divide' && operand2 === '0') {
+            if (operator === 'divide' && parseInt(operand2) === 0) {
                 explode()
             } else {             
             operand1 = parseFloat(operand1);
             operand2 = parseFloat(operand2);
             result = Math.round(operate[operator](operand1, operand2) * 100) / 100;
-            display.textContent = result;
+            display.textContent = displayNumber(result);
 
             operand1 = result;
             operand2 = '';
@@ -127,7 +133,7 @@ equalsButton.addEventListener('click', () => {
         operand1 = parseFloat(operand1);
         operand2 = parseFloat(operand2);
         result = Math.round(operate[operator](operand1, operand2) * 100) / 100;
-        display.textContent = result;
+        display.textContent = displayNumber(result);
     }
     // Reset operand variables, if user wants to enter in new operation
     operand1 = '';
@@ -138,6 +144,7 @@ equalsButton.addEventListener('click', () => {
 
 
 
+// Function to clear display and saved variables
 const clearButton = document.querySelector('.clear');
 
 function clear() { // Reset all variables
@@ -153,10 +160,11 @@ clearButton.addEventListener('click', clear);
 
 
 
+// Function to display animated explosion (used when divide by zero)
 let explosion = document.createElement('img');
 explosion.setAttribute('src', 'explosion.gif');
-explosion.setAttribute('width', '330px');
-explosion.setAttribute('height', '80px');
+explosion.setAttribute('width', display.offsetWidth);
+explosion.setAttribute('height', display.offsetHeight);
 
 function explode() {
     display.textContent = ''; 
@@ -169,3 +177,15 @@ function fixCalculator() {
     clear();
     display.textContent = 'X_X';
 }
+
+
+
+// Change number to exponential form if too large
+function displayNumber(num) {
+    if (num.toString().length < 10) {
+        return Number(num);
+    } else {
+        return Number.parseFloat(num).toExponential(2);
+    }
+}
+

@@ -44,7 +44,7 @@ p {
 
 .calculator {
     height: 680px;
-    width: 480px;
+    width: 550px;
     background-color: #202020;
     border-radius: 25px;
     display: flex;
@@ -67,6 +67,7 @@ p {
     justify-content: flex-end;
     align-items: center;
     border: 3px solid black;
+    overflow: hidden;
 }
 
 .buttons {
